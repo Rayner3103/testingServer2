@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: multi-client-server
+    env: java
+    buildCommand: mvn clean package
+    startCommand: java -jar target/multi-client-server-1.0-SNAPSHOT.jar
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        fromService:
+          type: web
+          name: multi-client-server
+          envVarKey: PORT
+      - key: JAVA_OPTS
+        value: "-Xmx512m"
